@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EC6DA18D-0532-4E73-BA69-A575A724C8BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>F2FPayDll</RootNamespace>
+    <AssemblyName>F2FPayDll</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>.\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\AlipayCore.cs" />
+    <Compile Include="Business\AlipayF2FMonitorResult.cs" />
+    <Compile Include="Business\AlipayF2FPayResult.cs" />
+    <Compile Include="Business\AlipayF2FPrepayResult.cs" />
+    <Compile Include="Business\AlipayF2FQueryResult.cs" />
+    <Compile Include="Business\AlipayF2FRefundResult.cs" />
+    <Compile Include="Business\AlipayMonitorImpl.cs" />
+    <Compile Include="Business\Alipaynotify.cs" />
+    <Compile Include="Business\AlipayTradeImpl.cs" />
+    <Compile Include="Business\F2FBiz.cs" />
+    <Compile Include="Business\F2FMonitor.cs" />
+    <Compile Include="Business\F2FResult.cs" />
+    <Compile Include="Business\IAlipayMonitor.cs" />
+    <Compile Include="Business\IAlipayTradeService.cs" />
+    <Compile Include="Domain\AlipayMonitorContentBuilder.cs" />
+    <Compile Include="Domain\AlipayTradePayContentBuilder.cs" />
+    <Compile Include="Domain\AlipayTradePrecreateContentBuilder.cs" />
+    <Compile Include="Domain\AlipayTradeQueryCententBuilder.cs" />
+    <Compile Include="Domain\AlipayTradeRefundContentBuilder.cs" />
+    <Compile Include="Domain\JsonBuilder.cs" />
+    <Compile Include="Model\ExtendParams.cs" />
+    <Compile Include="Model\GoodsInfo.cs" />
+    <Compile Include="Model\PayResultModel.cs" />
+    <Compile Include="Model\ResultEnum.cs" />
+    <Compile Include="Model\TradeInfo.cs" />
+    <Compile Include="Model\TradeStatusModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ailpay\AopSdk.csproj">
+      <Project>{9C11CAE5-5188-4E71-825B-68FC3135728A}</Project>
+      <Name>AopSdk</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

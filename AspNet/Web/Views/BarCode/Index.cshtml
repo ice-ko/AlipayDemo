@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewData["Title"] = "条码支付";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1>条码支付</h1>
+
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="tradeno" class="control-label col-sm-2">商户订单号：</label>
+                <div class="col-sm-10">
+                    <input type="text" name="tradeno" class="form-control" id="outTradeNo" value="" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="orderName" class="control-label col-sm-2">订单名称：</label>
+                <div class="col-sm-10">
+                    <input type="text" name="orderName" class="form-control" id="orderName" value="条码测试商品" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="orderAmount" class="control-label col-sm-2">付款金额：</label>
+                <div class="col-sm-10">
+                    <input type="number" min="0.01" name="orderAmount" class="form-control" id="orderAmount" value="0.01" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="orderAmount" class="control-label col-sm-2">支付授权码：</label>
+                <div class="col-sm-10">
+                    <input type="number" min="0.01" name="orderAmount" class="form-control" id="authCode" value="" />
+                    <span>例如285695700867367d</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button class="btn btn-success " type="button" id="btnGen" onclick="ScanCodeGen()">提交支付</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="col-sm-12">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="tradeno" class="control-label col-sm-2">查询结果：<span id="queryResultSpan"></span></label>
+                <div class="col-sm-10">
+                    @*<textarea class="form-control" style="height:280px;" id="queryResult"></textarea>*@
+                    <span>Json格式化</span>
+                    <pre id="json-renderer"></pre>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        function jsonViewer(data) {
+            try {
+                var input = eval('(' + data + ')');
+            }
+            catch (error) {
+                return alert("Cannot eval JSON: " + error);
+            }
+            var options = {
+                withQuotes: true
+            };
+            $('#json-renderer').jsonViewer(input, options);
+        }
+        function ScanCodeGen() {
+            $("#btnGen").attr("disabled", "disabled");
+            $("#queryResultSpan").html("已提交支付请等待查询结果");
+            $.post("/BarCode/ScanCodeGen",
+                {
+                    orderName: $("#orderName").val(),
+                    orderAmount: $("#orderAmount").val(),
+                    outTradeNo: $("#outTradeNo").val(),
+                    authCode: $("#authCode").val()
+                },
+                function (data) {
+                    $("#btnGen").removeAttr("disabled");
+                    $("#queryResultSpan").html("");
+                    jsonViewer(data);
+                });
+        }
+        function GetDateNow() {
+            var vNow = new Date();
+            var sNow = "";
+            sNow += String(vNow.getFullYear());
+            sNow += String(vNow.getMonth() + 1);
+            sNow += String(vNow.getDate());
+            sNow += String(vNow.getHours());
+            sNow += String(vNow.getMinutes());
+            sNow += String(vNow.getSeconds());
+            sNow += String(vNow.getMilliseconds());
+            document.getElementById("outTradeNo").value = sNow;
+        }
+        GetDateNow();
+    </script>
+}
